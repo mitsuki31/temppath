@@ -119,9 +119,15 @@ npm test
 
 Alternatively, you can run each test manually.
 
-- `npm run test:cjs` - Run CommonJS test.
-- `npm run test:esm` - Run ESModule test.
+- Run CommonJS test.
+  ```bash
+  npm run test:cjs
+  ```
 
+- Run ESModule test.
+  ```bash
+  npm run test:esm
+  ```
 
 ## License
 
