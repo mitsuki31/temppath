@@ -1,5 +1,7 @@
 # temppath
 
+[**🏠 Homepage**](https://mitsuki31.github.io/temppath/)
+
 Create a random temporary path based on system's temporary directory.
 
 ## APIs
@@ -131,4 +133,4 @@ Alternatively, you can run each test manually.
 
 ## License
 
-This project is licensed under the MIT License. For more details, see the **LICENSE** file.
+This project is licensed under the MIT License. For more details, see the [**LICENSE**](https://github.com/mitsuki31/temppath/blob/master/LICENSE) file.

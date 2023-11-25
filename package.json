@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/mitsuki31/temppath/issues"
   },
-  "homepage": "https://github.com/mitsuki31/temppath#readme",
+  "homepage": "https://mitsuki31.github.io/temppath",
   "devDependencies": {
     "docdash": "^2.0.2",
     "jsdoc": "~4.0.2"
