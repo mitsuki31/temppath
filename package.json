@@ -1,24 +1,29 @@
 {
   "name": "temppath",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Create a random temporary path based on system temporary directory",
   "main": "index.js",
   "scripts": {
     "test": "npm run test:cjs && npm run test:esm",
-    "test:cjs": "node test.js",
-    "test:esm": "node test.mjs"
+    "test:cjs": "node test/test.js",
+    "test:esm": "node test/test.mjs",
+    "build:docs": "jsdoc --configure jsdocrc.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/mitsuki31/temppath.git"
   },
   "author": {
-      "name": "Ryuu Mitsuki",
-      "url": "https://github.com/mitsuki31"
+    "name": "Ryuu Mitsuki",
+    "url": "https://github.com/mitsuki31"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mitsuki31/temppath/issues"
   },
-  "homepage": "https://github.com/mitsuki31/temppath#readme"
+  "homepage": "https://github.com/mitsuki31/temppath#readme",
+  "devDependencies": {
+    "docdash": "^2.0.2",
+    "jsdoc": "~4.0.2"
+  }
 }
