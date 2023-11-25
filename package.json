@@ -1,6 +1,6 @@
 {
   "name": "temppath",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Create a random temporary path based on system temporary directory",
   "main": "index.js",
   "scripts": {
