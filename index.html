@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/mitsuki31/temppath.git" target="_blank" class="menu-item" id="project_git_repo" >GitHub Repo</a></h2><h3>Modules</h3><ul><li><a href="module-temppath.html">temppath</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-temppath.html#~createTempPath">createTempPath</a></li><li data-type='method' style='display: none;'><a href="module-temppath.html#~createTempPathSync">createTempPathSync</a></li><li data-type='method' style='display: none;'><a href="module-temppath.html#~getTempPath">getTempPath</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3>temppath 0.2.0</h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme usertext">
+        <article><h1>temppath</h1>
+<p>Create a random temporary path based on system's temporary directory.</p>
+<h2>APIs</h2>
+<h3 id="getTempPath"><!-- Need some newlines -->
+<p><code>getTempPath</code> -&gt; <code>string</code> (Function)</h3></p>
+<p>Generates a temporary path based on the provided or system temporary directory.</p>
+<p>This function utilizes a random UUID for the directory name, ensuring that each time
+it is called, the path will be different from previous calls. The returned path can be
+used for either a temporary file or directory, according to your preferences.</p>
+<h4>Parameters</h4>
+<ul>
+<li><code>tmpdir</code> : { <code>string</code> } <em>(optional)</em><br>
+The temporary directory to be used. If not provided or empty, it defaults to the system's temporary directory.</li>
+</ul>
+<h4>Returns</h4>
+<ul>
+<li><code>string</code><br>
+A string representing a generated temporary path with a random UUID.</li>
+</ul>
+<h3><code>createTempPath</code> -&gt; <code>void</code> (Function)</h3>
+<p>Asynchronously creates a temporary path, either as a directory or file,
+based on the provided or system temporary directory.</p>
+<p>This function utilizes the <a href="#getTempPath">getTempPath</a> function.</p>
+<h4>Parameters</h4>
+<ul>
+<li>
+<p><code>tmpdir</code> : { <code>string</code> | <code>Object</code> | <code>Function</code> } <em>(optional)</em><br>
+The temporary directory path. If an object is provided, it is treated as the <code>options</code> parameter.
+If a function is provided, it is treated as the <code>callback</code> parameter, and <code>tmpdir</code> is set to <code>null</code>.</p>
+</li>
+<li>
+<p><code>options</code> : { <code>Object</code> | <code>Function</code> } <em>(optional)</em><br>
+Options for creating the temporary path. If a function is provided, it is treated as the <code>callback</code> parameter,
+and <code>options</code> is set to <code>{}</code> (an empty object).</p>
+<ul>
+<li>
+<p><code>options.asFile</code> : { <code>boolean</code> } [Default: <code>false</code>] <em>(optional)</em><br>
+If <code>true</code>, create a temporary file. Otherwise, create a directory.</p>
+</li>
+<li>
+<p><code>options.ext</code> : { <code>string</code> } [Default: <code>'.tmp'</code>] <em>(optional)</em><br>
+The extension for the temporary file. If <code>asFile</code> option is <code>false</code>, this option will be ignored. Default is '.tmp'.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>callback</code> : { <code>Function</code> } <em>(non-nullable)</em><br>
+A callback function to handle the result path or error. This is crucial and required, even when you wanted to omit all arguments.</p>
+<ul>
+<li>
+<p><code>error</code> : { <code>Error</code> } <em>(nullable)</em><br>
+An error object if an error occurred, or <code>null</code> if no error.</p>
+</li>
+<li>
+<p><code>resultPath</code> : { <code>string</code> }<br>
+The path of the created temporary directory or file.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3><code>createTempPathSync</code> -&gt; <code>string</code> (Function)</h3>
+<p>Synchronously creates a temporary path, either as a directory or file, based on the provided or system temporary directory
+and then returns a path that refers to the generated temporary directory or file.</p>
+<p>This function utilizes the <a href="#getTempPath">getTempPath</a> function.</p>
+<h4>Parameters</h4>
+<ul>
+<li>
+<p><code>tmpdir</code> : { <code>string</code> | <code>Object</code> } <em>(optional)</em><br>
+The temporary directory path. If an object is provided, it is treated as the <code>options</code> parameter, and <code>tmpdir</code> is set to <code>null</code>.</p>
+</li>
+<li>
+<p><code>options</code> : { <code>Object</code> } <em>(optional)</em><br>
+Options for creating the temporary path.</p>
+<ul>
+<li>
+<p><code>options.asFile</code> : { <code>boolean</code> } [Default: <code>false</code>] <em>(optional)</em><br>
+If <code>true</code>, create a temporary file. Otherwise, create a directory.</p>
+</li>
+<li>
+<p><code>options.ext</code> : { <code>string</code> } [Default: <code>'.tmp'</code>] <em>(optional)</em><br>
+The extension for the temporary file. If <code>asFile</code> option is <code>false</code>, this option will be ignored. Default is '.tmp'.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4>Returns</h4>
+<ul>
+<li><code>string</code><br>
+The path of the created temporary directory or file.</li>
+</ul>
+<h4>Throws</h4>
+<p><strong>Type:</strong> <code>TypeError</code><br>
+Throws a <code>TypeError</code> if the provided <code>tmpdir</code> or <code>options</code> is not of the correct type.</p>
+<p><strong>Type:</strong> <code>Error</code><br>
+Throws an <code>Error</code> if there is an issue creating the temporary directory or file.</p>
+<h2>Development</h2>
+<h3>Initialize and Install Dependencies</h3>
+<pre class="prettyprint source lang-bash"><code>npm install
+</code></pre>
+<h3>Build JSDoc</h3>
+<p>Generated JSDocs will be in <code>docs</code> directory.</p>
+<pre class="prettyprint source lang-bash"><code>npm run build:docs
+</code></pre>
+<h3>Test</h3>
+<p>Tests are written using inbuilt <code>node:assert</code> module.</p>
+<pre class="prettyprint source lang-bash"><code>npm test
+</code></pre>
+<p>Alternatively, you can run each test manually.</p>
+<ul>
+<li>
+<p>Run CommonJS test.</p>
+<pre class="prettyprint source lang-bash"><code>npm run test:cjs
+</code></pre>
+</li>
+<li>
+<p>Run ESModule test.</p>
+<pre class="prettyprint source lang-bash"><code>npm run test:esm
+</code></pre>
+</li>
+</ul>
+<h2>License</h2>
+<p>This project is licensed under the MIT License. For more details, see the <strong>LICENSE</strong> file.</p></article>
+    </section>
+
+
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Nov 25 2023 20:25:21 GMT+0700 (Western Indonesia Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

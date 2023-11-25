@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>temppath - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/mitsuki31/temppath.git" target="_blank" class="menu-item" id="project_git_repo" >GitHub Repo</a></h2><h3>Modules</h3><ul><li><a href="module-temppath.html">temppath</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-temppath.html#~createTempPath">createTempPath</a></li><li data-type='method' style='display: none;'><a href="module-temppath.html#~createTempPathSync">createTempPathSync</a></li><li data-type='method' style='display: none;'><a href="module-temppath.html#~getTempPath">getTempPath</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">temppath</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Main entry of <code>temppath</code> module.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Ryuu Mitsuki</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+            
+                <div class="description usertext"><p>Main entry of <code>temppath</code> module.</p></div>
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createTempPath"><span class="type-signature type-signature-async, inner">(async, inner) </span>createTempPath<span class="signature">(tmpdir<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>, callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Asynchronously creates a temporary path, either as a directory or file,
+based on the provided or system temporary directory.</p>
+<p>This function utilizes the <a href="module-temppath.html#~getTempPath">getTempPath</a> function.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Examples</h5>
+    
+        <p class="code-caption">Only specify a callback function</p>
+    
+    <pre class="prettyprint"><code>// Without any argument but a callback function
+// This will create a temporary directory in system's temporary path
+createTempPath(function (err, createdPath) {
+  if (err) console.error(err);
+  else console.log(createdPath);
+  // Unix: "$TMPDIR/&lt;TEMPPATH_DIR>"
+  // Termux Android: "$TMPDIR/&lt;TEMPPATH_DIR>" or "$PREFIX/tmp/&lt;TEMPPATH_DIR>"
+  // Windows: "%TMP%\&lt;TEMPPATH_DIR>" or "%TEMP%\&lt;TEMPPATH_DIR>"
+});</code></pre>
+
+        <p class="code-caption">Create a temporary file in system's temporary path</p>
+    
+    <pre class="prettyprint"><code>// This will create a temporary file in system's temporary path
+// with extension name of '.foo_temp'
+createTempPath({ asFile: true, ext: 'foo_temp' }, function (err, createdPath) {
+  if (err) console.error(err);
+  else console.log(createdPath);
+  // Unix: "$TMPDIR/&lt;TEMPPATH_FILE>.foo_temp"
+  // Termux Android: "$TMPDIR/&lt;TEMPPATH_FILE>.foo_temp" or "$PREFIX/tmp/&lt;TEMPPATH_FILE>.foo_temp"
+  // Windows: "%TMP%\&lt;TEMPPATH_FILE>.foo_temp" or "%TEMP%\&lt;TEMPPATH_FILE>.foo_temp"
+});</code></pre>
+
+        <p class="code-caption">Create a temporary file in current directory</p>
+    
+    <pre class="prettyprint"><code>const path = require('node:path');
+// For ESM: import path from 'node:path';
+
+// Use `process.cwd()` to get current directory path
+createTempPath(path.join(process.cwd(), 'tmp'), { asFile: true }, function (err, createdPath) {
+  if (err) console.error(err);
+  else console.log(createdPath);
+  // Unix: "$PWD/tmp/&lt;TEMPPATH_FILE>.tmp"
+  // Termux Android: "$PWD/tmp/&lt;TEMPPATH_FILE>.tmp"
+  // Windows: "%CD%\tmp\&lt;TEMPPATH_FILE>.tmp"
+});</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tmpdir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Object</span>
+|
+
+<span class="param-type"><a href="module-temppath.html#~CreateTempPathCallback">module:temppath~CreateTempPathCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The temporary directory path.
+If an object is provided, it is treated as the <code>options</code> parameter.
+If a function is provided, it is treated as the <code>callback</code> parameter,
+and <code>tmpdir</code> is set to <code>null</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type"><a href="module-temppath.html#~CreateTempPathCallback">module:temppath~CreateTempPathCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Options for creating the temporary path.
+If a function is provided, it is treated as the <code>callback</code> parameter,
+and <code>options</code> is set to <code>{}</code> (an empty object).</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>asFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>If <code>true</code>, create a temporary file. Otherwise, create a directory.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ext</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'.tmp'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The extension for the temporary file. If <code>asFile</code> option is <code>false</code>,
+this option will be ignored. Default is '.tmp'.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-temppath.html#~CreateTempPathCallback">module:temppath~CreateTempPathCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>A callback function to handle the result path or error.
+This is crucial and required, even when you wanted to omit all arguments.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createTempPathSync"><span class="type-signature type-signature-inner">(inner) </span>createTempPathSync<span class="signature">(tmpdir<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Synchronously creates a temporary path, either as a directory or file, based on the provided
+or system temporary directory and then returns a path that refers to the generated temporary directory or file.</p>
+<p>This function utilizes the <a href="module-temppath.html#~getTempPath">getTempPath</a> function.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line260">line 260</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Examples</h5>
+    
+        <p class="code-caption">Call the function without any argument</p>
+    
+    <pre class="prettyprint"><code>// If no argument specified, it will creates a temporary directory
+// in system's temporary path
+const tmpDirPath = createTempPathSync();
+console.log(tmpDirPath);
+// Unix: "$TMPDIR/&lt;TEMPPATH_DIR>"
+// Termux Android: "$TMPDIR/&lt;TEMPPATH_DIR>" or "$PREFIX/tmp/&lt;TEMPPATH_DIR>"
+// Windows: "%TMP%\&lt;TEMPPATH_DIR>" or "%TEMP%\&lt;TEMPPATH_DIR>"</code></pre>
+
+        <p class="code-caption">Create a temporary file with custom extension</p>
+    
+    <pre class="prettyprint"><code>const tmpFilePath = createTempPathSync({ asFile: true, ext: 'txt' });
+console.log(tmpFilePath);
+// Unix: "$TMPDIR/&lt;TEMPPATH_FILE>.txt"
+// Termux Android: "$TMPDIR/&lt;TEMPPATH_FILE>.txt" or "$PREFIX/tmp/&lt;TEMPPATH_FILE>.txt"
+// Windows: "%TMP%\&lt;TEMPPATH_FILE>.txt" or "%TEMP%\&lt;TEMPPATH_FILE>.txt"</code></pre>
+
+        <p class="code-caption">Create a temporary file in current directory</p>
+    
+    <pre class="prettyprint"><code>const path = require('node:path');
+// For ESM: import path from 'node:path';
+
+// Use `process.cwd()` to get current directory path
+const customTmpFilePath = createTempPathSync(
+  path.join(process.cwd(), 'tmp'), { asFile: true });
+console.log(customTmpFilePath);
+// Unix: "$PWD/tmp/&lt;TEMPPATH_FILE>.tmp"
+// Termux Android: "$PWD/tmp/&lt;TEMPPATH_FILE>.tmp"
+// Windows: "%CD%\tmp\&lt;TEMPPATH_FILE>.tmp"</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tmpdir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The temporary directory path. If an object is provided,
+it is treated as the <code>options</code> parameter, and <code>tmpdir</code> is set to null.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Options for creating the temporary path.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>asFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>If <code>true</code>, create a temporary file. Otherwise, create a directory.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ext</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'.tmp'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The extension for the temporary file. If <code>asFile</code> option is <code>false</code>,
+this option will be ignored. Default is '.tmp'.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-throws">Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>Throws a <code>TypeError</code> if the provided <code>tmpdir</code> or <code>options</code> is not of the correct type.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>Throws an <code>Error</code> if there is an issue creating the temporary directory or file.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The path of the created temporary directory or file.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getTempPath"><span class="type-signature type-signature-inner">(inner) </span>getTempPath<span class="signature">(tmpdir<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Generates a temporary path based on the provided or system temporary directory.</p>
+<p>This function utilizes a random UUID for the directory name, ensuring that each time
+it is called, the path will be different from previous calls. The returned path can be
+used for either a temporary file or directory, according to your preferences.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tmpdir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The temporary directory path. If not provided or empty,
+it defaults to the system's temporary directory.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-throws">Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>Throws a <code>TypeError</code> if the provided <code>tmpdir</code> is not a string.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The generated temporary path.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+
+    
+
+    <h4 class="name" id="~CreateTempPathCallback"><span class="type-signature"></span>CreateTempPathCallback<span class="signature">(error<span class="signature-attributes">nullable</span>, resultPath)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Callback function to handle the result or error from calling the
+<a href="module-temppath.html#~createTempPath">createTempPath</a> function.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Error</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>An error object if an error occurred, or <code>null</code> if no error.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>resultPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The path of the created temporary directory or file.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Nov 25 2023 20:25:21 GMT+0700 (Western Indonesia Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>
