@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const assert = require('node:assert');
 const path = require('node:path');
 const { isNullOrUndefined } = require('node:util');
-const temppath = require('../index.js');
+const temppath = require('..');
 
 const rootDir = path.resolve(process.cwd()),
       rootDirTmp = path.join(rootDir, 'tmp'),
