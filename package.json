@@ -31,5 +31,16 @@
   "devDependencies": {
     "docdash": "^2.0.2",
     "jsdoc": "~4.0.2"
-  }
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": [
+    "nodejs",
+    "library",
+    "javascript",
+    "temp",
+    "temporary",
+    "path"
+  ]
 }
