@@ -184,14 +184,15 @@ function createTempPath(tmpdir, options, callback) {
   tmpdir = getTempPath(tmpdir);
 
   const extension = (options.ext)
-    ? (options.ext.startsWith('.')
-        ? options.ext
-        // feat: Add support for creation temporary file with no extension
-        //// : (options.ext === '' ? defaultExt : '.' + options.ext);
-        : `.${options.ext}`
-      )
+    ? options.ext.startsWith('.')
+      ? options.ext
+      : `.${options.ext}`
     // Use default extension, if the extension name is not specified
-    : '.tmp';
+    // * feat: Add support for temporary file creation with no extension
+    : ((typeof options.ext === 'string' && options.ext.length === 0)
+      ? options.ext
+      : '.tmp'
+    );
 
   // Create the parent directory of generated temporary path
   fs.promises.mkdir(path.dirname(tmpdir), { recursive: true })
@@ -290,11 +291,13 @@ function createTempPathSync(tmpdir, options) {
   const extension = (options.ext)
     ? options.ext.startsWith('.')
       ? options.ext
-      // feat: Add support for creation temporary file with no extension
-      //// : (options.ext === '' ? defaultExt : '.' + options.ext);
       : `.${options.ext}`
     // Use default extension, if the extension name is not specified
-    : '.tmp';
+    // * feat: Add support for temporary file creation with no extension
+    : ((typeof options.ext === 'string' && options.ext.length === 0)
+      ? options.ext
+      : '.tmp'
+    );
 
   try {
     // Create the parent directory of generated temporary path
