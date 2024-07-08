@@ -16,7 +16,7 @@ module.exports = {
         readme: './README.md',
         package: './package.json',
         recurse: true,
-        verbose: false
+        verbose: true
     },
     templates: {
         cleverLinks: false,
