@@ -32,6 +32,8 @@ const { randomUUID } = require('node:crypto');
  * @property {boolean} [asFile=false] - Whether to create a temporary file instead directory.
  * @property {string}  [ext='.tmp'] - An extension name to use for tempoarary file creation.
  *                                    Ignored if the `asFile` is set to `false`.
+ * @property {number}  [maxLen=32] - The maximum characters' length of the generated temporary
+ *                                   directory or file name.
  * @global
  * @since  0.3.0
  */
@@ -67,14 +69,24 @@ function __getTempDir() {
  * 
  * This function utilizes a random UUID for the directory name, ensuring that each time
  * it is called, the path will be different from previous calls. The returned path can be
- * used for either a temporary file or directory, according to your preferences.
+ * used for either a temporary file or directory, according to user preferences.
+ *
+ * To limit the characters' length of generated temporary directory or file name,
+ * set the `maxLen` to the desired value and it must be a positive number.
+ * Thus, the function will trim the name to the desired maximum length.
  *
  * @public
  * @function
  * @param {string} [tmpdir] - The temporary directory path. If not provided or empty,
  *                            it defaults to the system's temporary directory.
+ * @param {number} [maxLen=32] - The maximum characters' length of the generated temporary path.
+ *                            Must be a positive number and greater than zero.
+ *
  * @returns {string} The generated temporary path.
+ *
  * @throws {TypeError} Throws a `TypeError` if the provided `tmpdir` is not a string.
+ * @throws {RangeError} If the given `maxLen` is less than or equal to zero.
+ *
  * @since 0.1.0
  */
 function getTempPath(tmpdir, maxLen) {
@@ -96,6 +108,10 @@ function getTempPath(tmpdir, maxLen) {
  * based on the provided or system temporary directory.
  *
  * This function utilizes the {@link module:temppath~getTempPath|getTempPath} function.
+ * To limit the characters' length of generated temporary directory or file name,
+ * set the {@link TempPathOptions.maxLen `options.maxLen`} to the desired value and
+ * it must be a positive number. Thus, the function will trim the name to the desired
+ * maximum length.
  *
  * @public
  * @async
@@ -110,8 +126,10 @@ function getTempPath(tmpdir, maxLen) {
  * @param {boolean} [options.asFile=false] - If `true`, create a temporary file. Otherwise, create a directory.
  * @param {string} [options.ext='.tmp'] - The extension for the temporary file. If `asFile` option is `false`,
  *                                        this option will be ignored. Default is '.tmp'.
+ * @param {number} [options.maxLen=32] - The maximum characters' length of the generated directory or file name.
+ *                                       Defaults to 32 characters.
  * @param {CreateTempPathCallback} callback - A callback function to handle the result path or error.
- *                                                            This is crucial and required, even when you wanted to omit all arguments.
+ *                                            This is crucial and required, even when you wanted to omit all arguments.
  *
  * @throws {TypeError} If the given arguments or the extension name specified with incorrect type.
  *
@@ -224,6 +242,10 @@ function createTempPath(tmpdir, options, callback) {
  * or system temporary directory and then returns a path that refers to the generated temporary directory or file.
  *
  * This function utilizes the {@link module:temppath~getTempPath|getTempPath} function.
+ * To limit the characters' length of generated temporary directory or file name,
+ * set the {@link TempPathOptions.maxLen `options.maxLen`} to the desired value and
+ * it must be a positive number. Thus, the function will trim the name to the desired
+ * maximum length.
  *
  * @public
  * @function
@@ -233,7 +255,9 @@ function createTempPath(tmpdir, options, callback) {
  * @param {Object} [options] - Options for creating the temporary path.
  * @param {boolean} [options.asFile=false] - If `true`, create a temporary file. Otherwise, create a directory.
  * @param {string} [options.ext='.tmp'] - The extension for the temporary file. If `asFile` option is `false`,
- *                                        this option will be ignored. Default is '.tmp'.
+ *                                        this option will be ignored. Default is `'.tmp'`.
+ * @param {number} [options.maxLen=32] - The maximum characters' length of the generated directory or file name.
+ *                                       Defaults to 32 characters.
  *
  * @returns {string} The path of the created temporary directory or file.
  *
