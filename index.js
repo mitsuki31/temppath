@@ -43,9 +43,9 @@ function isNullOrUndefined(o) {
  * @since 0.1.0
  */
 function __getTempDir() {
-    return process.env.TMPDIR                     // Unix-like & MacOS systems
-        || (process.env.TMP || process.env.TEMP)  // Windows system
-        || path.resolve(process.cwd(), 'tmp');    // Default path
+  return process.env.TMPDIR                   // Unix-like & MacOS systems
+    || (process.env.TMP || process.env.TEMP)  // Windows system
+    || path.resolve(process.cwd(), 'tmp');    // Default path
 }
 
 
