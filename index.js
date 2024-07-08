@@ -193,24 +193,23 @@ function createTempPath(tmpdir, options, callback) {
     // Use default extension, if the extension name is not specified
     : '.tmp';
 
-  fs.promises.mkdir(tmpdir, { recursive: true })
+  // Create the parent directory of generated temporary path
+  fs.promises.mkdir(path.dirname(tmpdir), { recursive: true })
     .then(function () {
       if (options.asFile) {
         const filename = tmpdir + extension;
+        // Create an empty file in the temporary directory
         fs.promises.writeFile(filename, '')
-          .then(function () {
-            callback(null, filename);  // Return the created the temporary file path
-          })
-          .catch(function (writeErr) {
-            callback(writeErr);
-          });
+          .then(() => callback(null, filename))  // Return the created the temporary file path
+          .catch(err => callback(err));
       } else {
-        callback(null, tmpdir);  // Return the created temporary directory path
+        // Create an empty directory in the temporary directory
+        fs.promises.mkdir(tmpdir)
+          .then(() => callback(null, tmpdir))  // Return the created temporary directory path
+          .catch(err => callback(err));
       }
     })
-    .catch(function (err) {
-      callback(err);
-    });
+    .catch(err => callback(err));
 }
 
 /**
@@ -278,8 +277,8 @@ function createTempPathSync(tmpdir, options) {
   }
 
   if (typeof options !== 'object') {
-      throw new TypeError(
-          `The "options" argument must be an object. Received ${typeof options}`);
+    throw new TypeError(
+      `The "options" argument must be an object. Received ${typeof options}`);
   }
   if (options.ext && typeof options.ext !== 'string') {
     throw new TypeError(`Expected a string extension, got ${typeof options.ext}`);
@@ -298,15 +297,17 @@ function createTempPathSync(tmpdir, options) {
     : '.tmp';
 
   try {
-    // Create a temporary directory with synchronous operation
-    fs.mkdirSync(tmpdir, { recursive: true });
+    // Create the parent directory of generated temporary path
+    fs.mkdirSync(path.dirname(tmpdir), { recursive: true });
 
     if (options.asFile) {
       const filename = tmpdir + extension;
-      fs.writeFileSync(filename, '');
+      fs.writeFileSync(filename, '');  // Create an empty temporary file
       return filename;  // Return the created temporary file path
     }
 
+    // Create a temporary directory with synchronous operation
+    fs.mkdirSync(tmpdir);
     return tmpdir;  // Return the created temporary directory path
   } catch (err) {
     // Throw a new error with source error as causative error
