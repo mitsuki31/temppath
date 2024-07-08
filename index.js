@@ -9,7 +9,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
-const { isNullOrUndefined } = require('node:util');
+// Should be avoid due to deprecated
+// const { isNullOrUndefined } = require('node:util');
 
 
 /**
@@ -22,6 +23,11 @@ const { isNullOrUndefined } = require('node:util');
  * @since 0.2.0
  */
 
+
+// Alternative for `node:util.isNullOrUndefined`
+function isNullOrUndefined(o) {
+  return (o === null || typeof o === 'undefined');
+}
 
 /**
  * Gets the temporary directory path based on the environment.
