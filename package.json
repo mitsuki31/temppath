@@ -1,5 +1,5 @@
 {
-  "name": "temppath",
+  "name": "@mitsuki31/temppath",
   "version": "0.3.0",
   "description": "Multi-platform temporary directories and files generator",
   "main": "index.js",
