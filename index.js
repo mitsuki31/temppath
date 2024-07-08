@@ -20,7 +20,20 @@ const { randomUUID } = require('node:crypto');
  * @callback CreateTempPathCallback
  * @param {?Error} error - An error object if an error occurred, or `null` if no error.
  * @param {string} resultPath - The path of the created temporary directory or file.
+ * @global
  * @since 0.2.0
+ */
+
+/**
+ * An object representating options to configure the tempoarary file or directory
+ * creation within this module.
+ *
+ * @typedef  {Object}  TempPathOptions
+ * @property {boolean} [asFile=false] - Whether to create a temporary file instead directory.
+ * @property {string}  [ext='.tmp'] - An extension name to use for tempoarary file creation.
+ *                                    Ignored if the `asFile` is set to `false`.
+ * @global
+ * @since  0.3.0
  */
 
 
@@ -84,18 +97,20 @@ function getTempPath(tmpdir) {
  * @public
  * @async
  * @function
- * @param {string|Object|module:temppath~CreateTempPathCallback} [tmpdir] - The temporary directory path.
+ * @param {string | TempPathOptions | CreateTempPathCallback} [tmpdir] - The temporary directory path.
  *                                   If an object is provided, it is treated as the `options` parameter.
  *                                   If a function is provided, it is treated as the `callback` parameter,
- *                                   and `tmpdir` is set to `null`.
- * @param {Object|module:temppath~CreateTempPathCallback} [options] - Options for creating the temporary path.
+ *                                   and `tmpdir` will fallback to system-based temporary directory.
+ * @param {TempPathOptions | CreateTempPathCallback} [options] - Options for creating the temporary path.
  *                                   If a function is provided, it is treated as the `callback` parameter,
  *                                   and `options` is set to `{}` (an empty object).
  * @param {boolean} [options.asFile=false] - If `true`, create a temporary file. Otherwise, create a directory.
  * @param {string} [options.ext='.tmp'] - The extension for the temporary file. If `asFile` option is `false`,
  *                                        this option will be ignored. Default is '.tmp'.
- * @param {module:temppath~CreateTempPathCallback} callback - A callback function to handle the result path or error.
+ * @param {CreateTempPathCallback} callback - A callback function to handle the result path or error.
  *                                                            This is crucial and required, even when you wanted to omit all arguments.
+ *
+ * @throws {TypeError} If the given arguments or the extension name specified with incorrect type.
  *
  * @example <caption>Only specify a callback function</caption>
  * // Without any argument but a callback function
@@ -206,15 +221,17 @@ function createTempPath(tmpdir, options, callback) {
  *
  * @public
  * @function
- * @param {string|Object} [tmpdir] - The temporary directory path. If an object is provided,
- *                                   it is treated as the `options` parameter, and `tmpdir` is set to null.
+ * @param {string | TempPathOptions} [tmpdir] - The temporary directory path. If an object is provided,
+ *                                   it is treated as the `options` parameter,
+ *                                   and `tmpdir` will fallback to system-based temporary directory.
  * @param {Object} [options] - Options for creating the temporary path.
  * @param {boolean} [options.asFile=false] - If `true`, create a temporary file. Otherwise, create a directory.
  * @param {string} [options.ext='.tmp'] - The extension for the temporary file. If `asFile` option is `false`,
  *                                        this option will be ignored. Default is '.tmp'.
+ *
  * @returns {string} The path of the created temporary directory or file.
  *
- * @throws {TypeError} Throws a `TypeError` if the provided `tmpdir` or `options` is not of the correct type.
+ * @throws {TypeError} If the given arguments or the extension name specified with incorrect type.
  * @throws {Error} Throws an `Error` if there is an issue creating the temporary directory or file.
  *
  * @example <caption>Call the function without any argument</caption>
