@@ -135,80 +135,67 @@ function getTempPath(tmpdir) {
  * @since 0.2.0
  */
 function createTempPath(tmpdir, options, callback) {
-    if ((typeof tmpdir === 'object' && !Array.isArray(tmpdir))
-            && typeof options === 'function' && isNullOrUndefined(callback)) {
-        callback = options;  // Swap the `options` to `callback`
-        options = tmpdir;    // Swap the `tmpdir` to `options`
-        tmpdir = null;       // Make this empty
-    } else if (!isNullOrUndefined(tmpdir) && typeof options === 'function'
-            && isNullOrUndefined(callback)) {
-        callback = options;
-        options = {};
-    } else if (typeof tmpdir === 'function' && isNullOrUndefined(options)
-            && isNullOrUndefined(callback)) {
-        callback = tmpdir;
-        options = {};
-        tmpdir = null;
-    } else if (isNullOrUndefined(options)) {
-        options = {};
-    }
-    
-    if (!callback || typeof callback !== 'function') {
-        throw new TypeError(
-            `The "callback" argument must be a function. Received ${typeof callback}`);
-    }
-    
-    if (typeof options !== 'object') {
-        throw new TypeError(
-            `The "options" argument must be an object. Received ${typeof options}`);
-    }
-    
-    // Resolve the root temporary path
-    tmpdir = getTempPath(tmpdir);
-    
-    // Default extension name for the extension of temporary file
-    const defaultExt = '.tmp';
-    let extension;
-    
-    if (options.ext && typeof options.ext === 'string') {
-        extension = options.ext.startsWith('.')
-            ? options.ext
-            : (options.ext === '' ? defaultExt : '.' + options.ext);
-    } else {
-        // Use default extension, if user not provided the extension name
-        extension = defaultExt;
-    }
-        
-    // Create a new temporary directory, if `asFile` is false
-    if (!options.asFile) {
-        fs.mkdir(tmpdir, { recursive: true }, function (err) {
-            if (err) {
-                callback(err);
-                return;
-            }
-            
-            callback(null, tmpdir);
-        });
-    }
-    // Otherwise, create as a temporary file
-    else {
-        fs.mkdir(path.dirname(tmpdir), { recursive: true }, function (err) {
-            if (err) {
-                callback(err);
-                return;
-            }
-            
-            const filename = tmpdir + extension;
-            fs.writeFile(filename, '', function (errWrite) {
-                if (errWrite) {
-                    callback(errWrite);
-                    return;
-                }
-                
-                callback(null, filename);
-            });
-        });
-    }
+  if ((typeof tmpdir === 'object' && !Array.isArray(tmpdir))
+      && typeof options === 'function' && isNullOrUndefined(callback)) {
+    callback = options;  // Swap the `options` to `callback`
+    options = tmpdir;    // Swap the `tmpdir` to `options`
+    tmpdir = null;       // Keep this empty
+  } else if (!isNullOrUndefined(tmpdir) && typeof options === 'function'
+      && isNullOrUndefined(callback)) {
+    callback = options;
+    options = {};
+  } else if (typeof tmpdir === 'function' && isNullOrUndefined(options)
+      && isNullOrUndefined(callback)) {
+    callback = tmpdir;
+    options = {};
+    tmpdir = null;
+  } else if (isNullOrUndefined(options)) {
+    options = {};
+  }
+
+  if (!callback || typeof callback !== 'function') {
+    throw new TypeError(
+      `The "callback" argument must be a function. Received ${typeof callback}`);
+  }
+  if (options && typeof options !== 'object') {
+    throw new TypeError(
+      `The "options" argument must be an object. Received ${typeof options}`);
+  }
+  if (options.ext && typeof options.ext !== 'string') {
+    throw new TypeError(`Expected a string extension, got ${typeof options.ext}`);
+  }
+
+  // Resolve the root temporary path
+  tmpdir = getTempPath(tmpdir);
+
+  const extension = (options.ext)
+    ? (options.ext.startsWith('.')
+        ? options.ext
+        // feat: Add support for creation temporary file with no extension
+        //// : (options.ext === '' ? defaultExt : '.' + options.ext);
+        : `.${options.ext}`
+      )
+    // Use default extension, if the extension name is not specified
+    : '.tmp';
+
+  fs.promises.mkdir(tmpdir, { recursive: true })
+    .then(function () {
+      if (options.asFile) {
+        const filename = tmpdir + extension;
+        fs.promises.writeFile(filename, '')
+          .then(function () {
+            callback(null, filename);  // Return the created the temporary file path
+          })
+          .catch(function (writeErr) {
+            callback(writeErr);
+          });
+      } else {
+        callback(null, tmpdir);  // Return the created temporary directory path
+      }
+    })
+    .catch(function (err) {
+      callback(err);
+    });
 }
 
 /**
