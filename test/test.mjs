@@ -9,7 +9,7 @@ import path from 'node:path';
 import { isNullOrUndefined } from 'node:util';
 import temppath from '../index.js';
 // Or:
-// import { default as temppath } from './index.js';
+// import { default as temppath } from '../index.js';
 
 const rootDir = path.resolve(process.cwd()),
       rootDirTmp = path.join(rootDir, 'tmp'),
