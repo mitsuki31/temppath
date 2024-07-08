@@ -182,9 +182,12 @@ function createTempPath(tmpdir, options, callback) {
   if (options.ext && typeof options.ext !== 'string') {
     throw new TypeError(`Expected a string extension, got ${typeof options.ext}`);
   }
+  if (options.maxLen && typeof options.maxLen !== 'number') {
+    throw new TypeError(`Expected a number for maxLen, got ${typeof options.maxLen}`);
+  }
 
-  // Resolve the root temporary path
-  tmpdir = getTempPath(tmpdir);
+  // Resolve the temporary path
+  tmpdir = getTempPath(tmpdir, options.maxLen);
 
   const extension = (options.ext)
     ? options.ext.startsWith('.')
@@ -287,9 +290,12 @@ function createTempPathSync(tmpdir, options) {
   if (options.ext && typeof options.ext !== 'string') {
     throw new TypeError(`Expected a string extension, got ${typeof options.ext}`);
   }
+  if (options.maxLen && typeof options.maxLen !== 'number') {
+    throw new TypeError(`Expected a number for maxLen, got ${typeof options.maxLen}`);
+  }
 
-  // Resolve the root temporary path
-  tmpdir = getTempPath(tmpdir);
+  // Resolve the temporary path
+  tmpdir = getTempPath(tmpdir, options.maxLen);
 
   const extension = (options.ext)
     ? options.ext.startsWith('.')
