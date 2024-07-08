@@ -65,17 +65,14 @@ function __getTempDir() {
  * @since 0.1.0
  */
 function getTempPath(tmpdir) {
-    if (tmpdir && typeof tmpdir !== 'string') {
-        throw new TypeError(
-            `Expected type is string. Received ${typeof tmpdir}`);
-    }
-    
-    if (!tmpdir || tmpdir === '') {
-        // Get system's temporary directory
-        tmpdir = __getTempDir();
-    }
-    
-    return path.join(tmpdir, randomUUID().replace(/-/g, ''));
+  if (tmpdir && typeof tmpdir !== 'string') {
+    throw new TypeError(`Expected type is string. Received ${typeof tmpdir}`);
+  }
+
+  return path.join(
+    (isNullOrUndefined(tmpdir) || tmpdir.length === 0) ? __getTempDir() : tmpdir,
+    randomUUID().replace(/-/g, '')
+  );
 }
 
 /**
