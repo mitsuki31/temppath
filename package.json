@@ -1,7 +1,7 @@
 {
   "name": "temppath",
-  "version": "0.2.0",
-  "description": "Create a random temporary path based on system temporary directory",
+  "version": "0.3.0",
+  "description": "Multi-platform temporary directories and files generator",
   "main": "index.js",
   "scripts": {
     "test": "npm run test:cjs && npm run test:esm",
