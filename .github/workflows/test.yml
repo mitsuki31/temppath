@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        os: [ Windows, Ubuntu, macOS ]
+        node-ver: [16.x, latest]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Node.js v${{ matrix.node-ver }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-ver }}
+        cache: 'npm'
+    - name: Clean install the project
+      run: npm ci
+    - name: Test the project
+      run: npm test
