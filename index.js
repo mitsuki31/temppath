@@ -77,14 +77,17 @@ function __getTempDir() {
  * @throws {TypeError} Throws a `TypeError` if the provided `tmpdir` is not a string.
  * @since 0.1.0
  */
-function getTempPath(tmpdir) {
+function getTempPath(tmpdir, maxLen) {
   if (tmpdir && typeof tmpdir !== 'string') {
     throw new TypeError(`Expected type is string. Received ${typeof tmpdir}`);
+  }
+  if (maxLen <= 0) {
+    throw new RangeError('Maximum characters must be greater than zero');
   }
 
   return path.join(
     (isNullOrUndefined(tmpdir) || tmpdir.length === 0) ? __getTempDir() : tmpdir,
-    randomUUID().replace(/-/g, '')
+    randomUUID().replace(/-/g, '').substr(0, maxLen)
   );
 }
 
