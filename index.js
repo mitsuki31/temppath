@@ -248,66 +248,57 @@ function createTempPath(tmpdir, options, callback) {
  * @since 0.2.0
  */
 function createTempPathSync(tmpdir, options) {
-    // Swap the 'tmpdir' argument to 'options', if the provided is an object
-    // and the 'options' argument is undefined or empty
-    if (typeof tmpdir === 'object' && !Array.isArray(tmpdir)
-            && isNullOrUndefined(options)) {
-        options = tmpdir;  // Swap
-        tmpdir = null;     // Make this empty
-    } else if (isNullOrUndefined(options)) {
-        // By using this approach, all paramaters will be optional.
-        // Users can simply call this function without any argument and with no error.
-        options = {};
+  // Swap the 'tmpdir' argument to 'options', if the provided is an object
+  // and the 'options' argument is undefined or empty
+  if (typeof tmpdir === 'object' && !Array.isArray(tmpdir)
+          && isNullOrUndefined(options)) {
+      options = tmpdir;  // Swap
+      tmpdir = null;     // Make this empty
+  } else if (isNullOrUndefined(options)) {
+      // By using this approach, all paramaters will be optional.
+      // Users can simply call this function without any argument and with no error.
+      options = {};
+  }
+
+  if (typeof options !== 'object') {
+      throw new TypeError(
+          `The "options" argument must be an object. Received ${typeof options}`);
+  }
+  if (options.ext && typeof options.ext !== 'string') {
+    throw new TypeError(`Expected a string extension, got ${typeof options.ext}`);
+  }
+
+  // Resolve the root temporary path
+  tmpdir = getTempPath(tmpdir);
+
+  const extension = (options.ext)
+    ? options.ext.startsWith('.')
+      ? options.ext
+      // feat: Add support for creation temporary file with no extension
+      //// : (options.ext === '' ? defaultExt : '.' + options.ext);
+      : `.${options.ext}`
+    // Use default extension, if the extension name is not specified
+    : '.tmp';
+
+  try {
+    // Create a temporary directory with synchronous operation
+    fs.mkdirSync(tmpdir, { recursive: true });
+
+    if (options.asFile) {
+      const filename = tmpdir + extension;
+      fs.writeFileSync(filename, '');
+      return filename;  // Return the created temporary file path
     }
-    
-    if (typeof options !== 'object') {
-        throw new TypeError(
-            `The "options" argument must be an object. Received ${typeof options}`);
-    }
-    
-    // Resolve the root temporary path
-    tmpdir = getTempPath(tmpdir);
-    
-    // Default extension name for the extension of temporary file
-    const defaultExt = '.tmp';
-    let extension;
-    
-    if (options.ext && typeof options.ext === 'string') {
-        extension = options.ext.startsWith('.')
-            ? options.ext
-            : (options.ext === '' ? defaultExt : '.' + options.ext);
-    } else {
-        // Use default extension, if user not provided the extension name
-        extension = defaultExt;
-    }
-    
-    try {
-        // Create a new temporary directory, if `asFile` is false
-        if (!options.asFile) {
-            fs.mkdirSync(tmpdir, { recursive: true });
-            
-            // Return the created temporary directory path
-            return tmpdir;
-        }
-        // Otherwise, create as a temporary file
-        else {
-            const filename = tmpdir + extension;
-            fs.mkdirSync(path.dirname(tmpdir), { recursive: true });
-            fs.writeFileSync(filename, '');
-            
-            // Return the created temporary file path
-            return filename;
-        }
-    } catch (error) {
-        let msg = 'temppath: Failed to create temporary ';
-        if (options.asFile) {
-            msg += 'file.';
-        } else {
-            msg += 'directory.';
-        }
-        // Throw a new error with main error as cause error
-        throw new Error(msg, { cause: error });
-    }
+
+    return tmpdir;  // Return the created temporary directory path
+  } catch (err) {
+    // Throw a new error with source error as causative error
+    throw new Error(
+      `temppath: Failed to create temporary ${
+        (options.asFile) ? 'file' : 'directory'
+      }.`, { cause: err }
+    );
+  }
 }
 
 
