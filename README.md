@@ -4,10 +4,14 @@ A lightweight and multi-platform Node.js module designed to create temporary fil
 and directories. It can utilize the system's default temporary path or a user-specified
 directory, offering flexibility and ease of use across different environments.
 
+This module leverages system environment variables to determine the temporary directory
+and will fallback to the built-in function [`os.tmpdir()`](https://nodejs.org/api/os.html#os_os_tmpdir)
+if the module is incapable determine the temporary directory provided by the system.
+
 Here’s a detailed example demonstrating how to create a temporary directory using this module:
 
 ```javascript
-const temppath = require('temppath');
+const temppath = require('@mitsuki31/temppath');
 
 temppath.createTempPath((err, tempDir) => {
   if (err) console.error('Error creating temporary directory:', err);
@@ -18,7 +22,7 @@ temppath.createTempPath((err, tempDir) => {
 And here’s how you can create a temporary file:
 
 ```javascript
-const temppath = require('temppath');
+const temppath = require('@mitsuki31/temppath');
 
 temppath.createTempPath({ asFile: true }, (err, tempFile) => {
   if (err) console.error('Error creating temporary file:', err);
@@ -38,7 +42,7 @@ promise-based function. Try to promisify it using `util.promisify` function, lik
 
 ```javascript
 const { promisify } = require('node:util');
-const temppath = require('temppath');
+const temppath = require('@mitsuki31/temppath');
 // Promisify the function
 const createTempPath = promisify(temppath.createTempPath);
 
