@@ -6,7 +6,7 @@ directory, offering flexibility and ease of use across different environments.
 
 This module leverages system environment variables to determine the temporary directory
 and will fallback to the built-in function [`os.tmpdir()`](https://nodejs.org/api/os.html#os_os_tmpdir)
-if the module is incapable determine the temporary directory provided by the system.
+if the module is incapable to determine the temporary directory provided by the system.
 
 Here’s a detailed example demonstrating how to create a temporary directory using this module:
 
