@@ -60,7 +60,8 @@ function isNullOrUndefined(o) {
 function __getTempDir() {
   return process.env.TMPDIR                   // Unix-like & MacOS systems
     || (process.env.TMP || process.env.TEMP)  // Windows system
-    || path.resolve(process.cwd(), 'tmp');    // Default path
+    || require('node:os').tmpdir()            // Fallback
+    || path.resolve(process.cwd(), 'tmp');    // Otherwise, use current directory
 }
 
 
