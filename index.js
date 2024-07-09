@@ -45,12 +45,15 @@ function isNullOrUndefined(o) {
 }
 
 /**
- * Gets the temporary directory path based on the environment.
+ * Retrieves the temporary directory path based on the current environment.
  *
- * This function checks common environment variables for temporary directories,
- * such as TMPDIR on Unix-like and MacOS systems, and TMP/TEMP on Windows.
- * If no environment variable is set, it defaults to a 'tmp' directory
- * within the current working directory.
+ * This function first checks common environment variables for temporary directories:
+ * - `TMPDIR` on UNIX-like and macOS systems
+ * - `TMP` or `TEMP` on Windows systems
+ * 
+ * If none of these environment variables are set or return null, it falls back to the 
+ * `os.tmpdir()` function. If this also returns null, it uses the current working directory 
+ * and creates a new directory called `tmp`.
  *
  * @private
  * @function
