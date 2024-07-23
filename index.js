@@ -25,7 +25,7 @@ const { randomUUID } = require('node:crypto');
  */
 
 /**
- * An object representating options to configure the tempoarary file or directory
+ * An object representating options to configure the temporary file or directory
  * creation within this module.
  *
  * @typedef  {Object}  TempPathOptions

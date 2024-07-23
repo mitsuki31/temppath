@@ -3,6 +3,7 @@
   "version": "0.3.1",
   "description": "Multi-platform temporary directories and files generator",
   "main": "index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "test": "npm run test:cjs && npm run test:esm",
     "test:cjs": "node test/test.js",
