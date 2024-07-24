@@ -1,6 +1,6 @@
 {
   "name": "@mitsuki31/temppath",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Multi-platform temporary directories and files generator",
   "main": "index.js",
   "types": "types/index.d.ts",
